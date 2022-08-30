@@ -71,13 +71,23 @@ class LinkedList {
     if (!this.head) {
       return; // return null;
     }
-
+    while (this.head && this.head.value === value) {
+      this.head = this.head.next;
+    }
     let curNode = this.head;
-    while (curNode){
+    while (curNode.next) {
+      if (curNode.next.value === value) {
+        curNode.next = curNode.next.next;
+      } else {
+        curNode = curNode.next;
+      }
+    }
 
+    if (this.tail.value === value) {
+      this.tail = curNode;
     }
   }
-  
+
   prepend(value) {
     const newNode = { value: value, next: this.head };
     this.head = newNode;
@@ -101,7 +111,14 @@ const LinkedList1 = new LinkedList();
 
 LinkedList1.append("hey");
 LinkedList1.append(true);
+LinkedList1.append("hola");
+LinkedList1.append("hey");
 LinkedList1.append(12.85);
 LinkedList1.prepend("first value");
+
+console.log(LinkedList1.toArray());
+
+LinkedList1.delete("hey");
+LinkedList1.delete("first value");
 
 console.log(LinkedList1.toArray());
